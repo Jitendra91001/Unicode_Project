@@ -1,0 +1,17 @@
+.h1{
+    height: 40px;
+    line-height: 40px;
+    width:90%;
+    padding: 10px;
+    margin-top: 50px;
+    box-shadow: 1px 1px 1px 1px black ;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    flex: 5;
+}
+
+.selectbox{
+    width: 23rem;
+    margin-bottom: 5px;
+}
