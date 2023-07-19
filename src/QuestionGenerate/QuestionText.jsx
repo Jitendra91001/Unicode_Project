@@ -1,49 +1,41 @@
-import React, { useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import './question.css'
 import Input from '../Component/Input'
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import Label from '../Component/Label';
 import Button from '../Component/Button';
-import { options, options2, options3} from './data';
+import { options2, options3} from './data';
 import Radio from '../Component/Radio';
 import Tab from '../Tab/Tab';
+import { createAPI } from '../App';
+import { toast } from 'react-toastify';
 const QuestionText = () => {
-    const [selectedOption, setSelectedOption] = useState({
-        text_name: '',
-        text_type: options,
-        managedby: {},
-        scrinning: {},
-        totalNoQuestion: 0,
-        radioValue:''
-
-    });
-
+   const contextapiData=useContext(createAPI)
+   const{selectedOption,setSelectedOption}=contextapiData;
     const { text_name, text_type, managedby, scrinning, totalNoQuestion,} = selectedOption
+
     const handleChangeData = (fieldName, value) =>{
         setSelectedOption((prev) => {
             return { ...prev, [fieldName]: value }
         })
     }
-
-
     const handleCreateOption = (value) => {
         setSelectedOption((prev) => {
             return {
                 ...prev,
-                text_type: [...prev.text_type, { value: value, label: value.toUpperCase()+value[0].slice(1,).toLowerCase() }]
+                text_type: [...prev.text_type, { value: value, label: value[0].toUpperCase()+value.slice(1,).toLowerCase() }]
             }
         })
+        toast.success("option Created Please Choose")
     }
 
     const submitData = () => {
         console.log(selectedOption)
+        toast.success("Data Submitted")
     }
 
     const handleMCQ = (e) => {
-
-        console.log(e.target.value)
-
           setSelectedOption((prev)=>{
             return {...prev,mcq:prev.mcq,[e.target.name]:e.target.value}
           })
@@ -51,7 +43,7 @@ const QuestionText = () => {
     }
     return (
         <>
-            <form className='ps-2'>
+            <form className=' p-2'>
                 <p className='h1'>Condidate scrinning text Creation</p>
                 <Label label="Text Name" />
                 <Input
@@ -102,8 +94,8 @@ const QuestionText = () => {
                 }
 
 
-                <Button type="button" onClick={submitData} value="submit condidate text" />
-                <Button type="button" value=" final submit" />
+                <Button type="button" classname="btn btn-success mt-4"  onClick={submitData} value="submit condidate text" />
+                <Button type="button" classname="btn btn-light ms-4 mt-4"  value=" final submit" />
 
             
             </form>

@@ -1,14 +1,32 @@
+import { createContext, useState } from 'react';
 import './App.css';
-import PredifineQuestion from './PredifineQuestion/PredifineQuestion';
+import { options } from './QuestionGenerate/data';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import QuestionText from './QuestionGenerate/QuestionText';
-import Random from './RandamComponent/Random';
-import Tab from './Tab/Tab';
+const createAPI=createContext()
 function App() {
+ 
+  const [selectedOption, setSelectedOption] = useState({
+    text_name: '',
+    text_type: options,
+    managedby: {},
+    scrinning: {},
+    totalNoQuestion: 0,
+    radioValue:'',
+    AddNewData:[]
+
+});
   return (
     <div className="App">
+      <createAPI.Provider value={{selectedOption,setSelectedOption}}>
+        <ToastContainer/>
      <QuestionText/>
+     </createAPI.Provider>
+     {/* <AddNewQuestion/> */}
     </div>
   );
 }
 
 export default App;
+export{createAPI}

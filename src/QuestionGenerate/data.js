@@ -14,6 +14,8 @@ const options3 = [
     {value: 'post Interview', label: "Post Interview"}
 ]
 
-const mcq=["Yes","No"]
+const rows = [
 
-export{options,options2,options3,mcq}
+  ];
+
+export{options,options2,options3,rows}
