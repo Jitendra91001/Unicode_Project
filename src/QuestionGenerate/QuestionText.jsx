@@ -1,30 +1,33 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import './question.css'
 import Input from '../Component/Input'
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import Label from '../Component/Label';
 import Button from '../Component/Button';
-import { options2, options3} from './data';
+import { options2, options3 } from './data';
 import Radio from '../Component/Radio';
 import Tab from '../Tab/Tab';
 import { createAPI } from '../App';
 import { toast } from 'react-toastify';
 const QuestionText = () => {
-   const contextapiData=useContext(createAPI)
-   const{selectedOption,setSelectedOption}=contextapiData;
-    const { text_name, text_type, managedby, scrinning, totalNoQuestion,} = selectedOption
-
-    const handleChangeData = (fieldName, value) =>{
-        setSelectedOption((prev) => {
-            return { ...prev, [fieldName]: value }
-        })
+    const contextapiData = useContext(createAPI)
+    const { selectedOption, setSelectedOption } = contextapiData;
+    const { text_name, text_type, managedby, scrinning, totalNoQuestion, } = selectedOption
+    const handleChangeData = (fieldName, value) => {
+        if (value < 0) {
+            toast.warning("Please Enter the Positive Number")
+        } else {
+            setSelectedOption((prev) => {
+                return { ...prev, [fieldName]: value }
+            })
+        }
     }
     const handleCreateOption = (value) => {
         setSelectedOption((prev) => {
             return {
                 ...prev,
-                text_type: [...prev.text_type, { value: value, label: value[0].toUpperCase()+value.slice(1,).toLowerCase() }]
+                text_type: [...prev.text_type, { value: value, label: value[0].toUpperCase() + value.slice(1,).toLowerCase() }]
             }
         })
         toast.success("option Created Please Choose")
@@ -36,10 +39,10 @@ const QuestionText = () => {
     }
 
     const handleMCQ = (e) => {
-          setSelectedOption((prev)=>{
-            return {...prev,mcq:prev.mcq,[e.target.name]:e.target.value}
-          })
-          
+        setSelectedOption((prev) => {
+            return { ...prev, mcq: prev.mcq, [e.target.name]: e.target.value }
+        })
+
     }
     return (
         <>
@@ -90,14 +93,14 @@ const QuestionText = () => {
                 /><br />
 
                 {
-                     selectedOption.totalNoQuestion>0 && <Tab/>
+                    selectedOption.totalNoQuestion > 0 && <Tab />
                 }
 
 
-                <Button type="button" classname="btn btn-success mt-4"  onClick={submitData} value="submit condidate text" />
-                <Button type="button" classname="btn btn-light ms-4 mt-4"  value=" final submit" />
+                <Button type="button" classname="btn btn-success mt-4" onClick={submitData} value="submit condidate text" />
+                <Button type="button" classname="btn btn-light ms-4 mt-4" value=" final submit" />
 
-            
+
             </form>
         </>
     )

@@ -1,7 +1,13 @@
 const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
+    { value: 'programming', label: 'Programming' },
+    { value: 'mcq', label: 'Mcq' },
+    { value: 'descreptive', label: 'Descreptive' },
+];
+
+const Technology = [
+    { value: 'python', label: 'Python' },
+    { value: 'java', label: 'Java' },
+    { value: 'javascript', label: 'Javascript' },
 ];
 
 const options2 = [
@@ -18,4 +24,12 @@ const rows = [
 
   ];
 
-export{options,options2,options3,rows}
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 170 },
+    { field: 'questiontitel', headerName: 'QuestionTitel', width: 300 },
+    { field: 'questionLavel', headerName: 'QuestionLavel ', width: 200 },
+    { field: 'QuestionType', headerName: 'QuestioType ', width: 200 },
+  
+  ];
+
+export{options,options2,options3,rows,columns,Technology}

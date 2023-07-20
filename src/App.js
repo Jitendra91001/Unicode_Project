@@ -14,6 +14,16 @@ function App() {
     scrinning: {},
     totalNoQuestion: 0,
     radioValue:'',
+    RandomValue:{
+      RandomQuestion:0,
+      Technology:[],
+      NoOfmcqQuestion:0
+    },
+    PredefineQuestion:{
+      TotalNoOfQuestion:0,
+      Technology:'',
+      QuestioType:''
+    },
     AddNewData:[]
 
 });
