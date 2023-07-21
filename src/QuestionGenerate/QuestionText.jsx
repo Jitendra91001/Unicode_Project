@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, {memo, useContext } from 'react'
 import './question.css'
 import Input from '../Component/Input'
 import Select from 'react-select';
@@ -106,4 +106,4 @@ const QuestionText = () => {
     )
 }
 
-export default QuestionText
+export default memo(QuestionText)

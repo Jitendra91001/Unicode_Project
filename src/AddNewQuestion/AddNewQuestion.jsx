@@ -1,20 +1,14 @@
 import React, { useContext, useState } from 'react'
-import { options } from '../QuestionGenerate/data';
+import { options,Technology } from '../QuestionGenerate/data';
 import Select from 'react-select';
+import { addNewQuestion } from '../QuestionGenerate/data';
 import { createAPI } from '../App';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 const AddNewQuestion = ({ render, setRender }) => {
     const { selectedOption, setSelectedOption } = useContext(createAPI)
     const [option, setOption] = useState({ option1: { value: '', isCorrect: false } })
-    const [AddNewdata, setAddNewData] = useState({
-        Technology: '',
-        QuestionType: '',
-        QuestionTitle: '',
-        option:{option1:'',option2:'',option3:'',option4:''},
-        CorrectAnsswer: ''
-    });
-    const { AddNewData } = selectedOption
-
+    const [addNewdata, setAddNewData] = useState(addNewQuestion);
     const generateQuestions = () => {
         if (Object.keys(option).length < 4) {
             if (Object.keys(option).length) {
@@ -23,20 +17,19 @@ const AddNewQuestion = ({ render, setRender }) => {
 
             } else {
                 setOption({ ...option, option1: { value: '', isCorrect: false } })
-
             }
         } else {
             toast.error("maximum Option Selected")
         }
     }
     const handleData = (fieldName, value) => {
-        if(fieldName.includes('option')){
+        if (fieldName.includes('option')) {
             setAddNewData((prev) => {
-                return { ...prev,option:{...prev.option,[fieldName]:value}}
+                return { ...prev, option: { ...prev.option, [fieldName]: value } }
             })
-        }else{
+        } else {
             setAddNewData((prev) => {
-                return { ...prev,[fieldName]:value}
+                return { ...prev, [fieldName]: value }
             })
         }
     }
@@ -49,65 +42,70 @@ const AddNewQuestion = ({ render, setRender }) => {
     }
 
     const saveData = () => {
-        setSelectedOption({...selectedOption, AddNewData:[...selectedOption.AddNewData, {...AddNewdata}]})
-        setRender(!render)
-        // console.log({...selectedOption, AddNewData:[...selectedOption.AddNewData, {...AddNewdata}]})
-        toast.success("Data Save")
+
+        if (Object.values(addNewdata).every(data => Boolean(data) !== false)) {
+            setSelectedOption({ ...selectedOption, AddNewData: [...selectedOption.AddNewData, { ...addNewdata }] })
+            setRender(!render)
+            toast.success("data saved !!!")
+            axios.post('http://localhost:8080/AddNewQuestion',addNewdata)
+        } else {
+            toast.error("Please all fields Required !!!")
+        }
+
     }
     const SaveNewCreate = () => {
-        setSelectedOption({ ...selectedOption, AddNewData: selectedOption.AddNewData, AddNewdata })
-        console.log(selectedOption)
-        toast.success("Data Saved");
+        if (Object.values(addNewdata).every(data => Boolean(data) !== false)) {
+            setSelectedOption({ ...selectedOption, AddNewData: selectedOption.AddNewData, addNewdata })
+            setAddNewData(addNewQuestion)
+            toast.success("Data Saved !!!")
+            axios.post('http://localhost:8080/AddNewQuestion',addNewdata)
+        } else {
+            toast.error("Please all fields Required !!!")
+        }
+
     }
 
-    const cancelData=()=>{
+    const cancelData = () => {
         setRender(!render)
-        toast.error("canclation")
+        toast.success("canclation")
     }
     return (
         <>
             <div className='container-fluid addnew'>
                 <p className='fs-4 mt-2'>Add New Questions</p>
-                <label>Technology</label><br/>
+                <label>Technology</label><br />
                 <Select
-                    defaultValue={AddNewdata}
-                    onChange={(value) => handleData("Technology", value)}
-                    options={options}
+                    defaultValue={"Select..."}
+                    onChange={(value) => handleData("Technology", value.value)}
+                    options={Technology}
                 />
 
                 <label>Question Type</label><br />
 
                 <Select
-                    defaultValue={AddNewdata}
-                    onChange={(value) => handleData("QuestionType", value)}
+                    defaultValue={"Select..."}
+                    onChange={(value) => handleData("QuestionType", value.value)}
                     options={options}
                 />
-
                 <label>Question Title</label><br />
-
-                <Select
-                    defaultValue={AddNewdata}
-                    onChange={(value) => handleData("QuestionTitle", value)}
-                    options={options}
-                />
+                 <input type='text' onChange={(e) => handleData("QuestionTitel", e.target.value)}placeholder='Enter the Question Title'className='form-control'
+                 />
 
                 <div className='Answertype'>
                     <><p className='mt-3 fs-5 d-flex'>Answer Option</p><div className='icon mt-3 ms-2' onClick={() => generateQuestions()}>+</div></></div>
-
-
                 {
                     Object.keys(option).map((option, index) => {
 
                         return (
                             <div className='d-flex' key={index}>
                                 <div>
-                                    <label>Answer Option ({index+1})</label><br />
-                                    <input type='text' onChange={(e)=>handleData(`option${index+1}`,e.target.value)} className='form-control w-75'  />
+                                    <label>Answer Option ({index + 1})</label><br />
+                                    <input type='text' onChange={(e) => handleData(`option${index + 1}`, e.target.value)} className='form-control w-75' />
                                 </div>
 
                                 <div>
                                     <label>Is Correct</label><br />
-                                    <input type='checkbox' onChange={(e) => handleData("CorrectAnsswer", e.target.value)} className='mt-2 accent' />
+                                    <input type='radio' name="correct" onChange={(e) => handleData("CorrectAnsswer", e.target.value)} value={`option${index+1}`} className='mt-2 accent' />
                                 </div>
 
                                 <div style={{ backgroundColor: "red" }} className='sub ms-3' onClick={() => deletedataoption(option)}>-</div>
@@ -122,9 +120,6 @@ const AddNewQuestion = ({ render, setRender }) => {
                     <button className='btn btn-success ms-2' type='button' onClick={SaveNewCreate}>Save & Create New</button>
                     <button className='btn btn-danger float-end' type='button' onClick={cancelData}>Cancel</button>
                 </div>
-
-
-
             </div>
 
 

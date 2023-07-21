@@ -28,8 +28,15 @@ const rows = [
     { field: 'id', headerName: 'ID', width: 170 },
     { field: 'questiontitel', headerName: 'QuestionTitel', width: 300 },
     { field: 'questionLavel', headerName: 'QuestionLavel ', width: 200 },
-    { field: 'QuestionType', headerName: 'QuestioType ', width: 200 },
+    { field: 'QuestionType', headerName: 'QuestionType ', width: 200 },
   
   ];
 
-export{options,options2,options3,rows,columns,Technology}
+  const addNewQuestion={ 
+  Technology: '',
+  QuestionType: '',
+  QuestionTitel: '',
+  option: { option1: '', option2: '', option3: '', option4: '' },
+  CorrectAnsswer: ''}
+
+export{options,options2,options3,rows,columns,Technology,addNewQuestion}

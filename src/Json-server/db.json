@@ -1,0 +1,55 @@
+{
+  "AddNewQuestion": [
+    {
+      "Technology": {
+        "value": "python",
+        "label": "Python"
+      },
+      "QuestionType": {
+        "value": "mcq",
+        "label": "Mcq"
+      },
+      "QuestionTitle": "What is Python",
+      "option": {
+        "option1": "Programing langauage",
+        "option2": "structure langauge",
+        "option3": "database langauge",
+        "option4": "query langauge"
+      },
+      "CorrectAnsswer": "on",
+      "id": 1
+    },
+    {
+      "Technology": {
+        "value": "javascript",
+        "label": "Javascript"
+      },
+      "QuestionType": {
+        "value": "mcq",
+        "label": "Mcq"
+      },
+      "QuestionTitle": "What is Javascript",
+      "option": {
+        "option1": "Javascript is Client side langange",
+        "option2": "Javascript is a Provaided the Validation",
+        "option3": "Javascript is server side langauge with using node js",
+        "option4": "Javascript is programming lanaguage"
+      },
+      "CorrectAnsswer": "option1",
+      "id": 2
+    },
+    {
+      "Technology": "python",
+      "QuestionType": "programming",
+      "QuestionTitel": "What is Python",
+      "option": {
+        "option1": "Python is Programming",
+        "option2": "Python is a Structural",
+        "option3": "Python is a AIML langanage",
+        "option4": "ABC"
+      },
+      "CorrectAnsswer": "option1",
+      "id": 3
+    }
+  ]
+}
